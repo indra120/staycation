@@ -1,3 +1,5 @@
+import Head from 'next/head'
+
 export default function Stylesheet({
   dataTables,
   fontAwesome,
@@ -5,7 +7,7 @@ export default function Stylesheet({
   sbAdmin,
 }) {
   return (
-    <>
+    <Head>
       {fontAwesome && (
         <link href='/styles/fontawesome/all.min.css' rel='stylesheet' />
       )}
@@ -24,6 +26,6 @@ export default function Stylesheet({
           rel='stylesheet'
         />
       )}
-    </>
+    </Head>
   )
 }
