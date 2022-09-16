@@ -1,22 +1,22 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const featureSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   qty: {
     type: Number,
-    required: true
+    required: true,
   },
   imageUrl: {
     type: String,
-    required: true
+    required: true,
   },
   itemId: {
     type: Object,
-    ref: 'Item'
-  }
+    ref: 'Item',
+  },
 })
 
 export default mongoose.models.Feature || mongoose.model('Feature', featureSchema)
