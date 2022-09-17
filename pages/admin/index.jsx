@@ -1,47 +1,34 @@
-import { useState, useEffect } from 'react'
+import { useRef } from 'react'
 import { useRouter } from 'next/router'
+import { useSelector, useDispatch } from 'react-redux'
+import { withIronSessionSsr } from 'iron-session/next'
 import Head from 'next/head'
-import axios from 'axios'
 import Stylesheet from '../../src/components/Stylesheet'
 import Alert from '../../src/components/Alert'
+import { login } from '../../src/redux/auth/thunk'
+import sessionOptions from '../../src/lib/sessionOptions'
 
 export default function Admin() {
-  const [state, setState] = useState({
-    username: '',
-    password: '',
-    error: {},
-  })
+  const auth = useSelector(state => state.auth)
   const router = useRouter()
+  const dispatch = useDispatch()
 
-  function handleChange(e) {
-    setState(prev => ({ ...prev, [e.target.name]: e.target.value }))
-  }
+  const username = useRef()
+  const password = useRef()
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault()
-    try {
-      const { username, password } = state
-
-      const response = await axios.post('/api/admin/signin', {
-        username,
-        password,
+    dispatch(
+      login({
+        username: username.current.value,
+        password: password.current.value,
       })
-
-      window.localStorage.setItem('accessToken', response.data.accessToken)
-      router.push('/')
-    } catch (error) {
-      setState(prev => {
-        if (error.response.status == 404) {
-          return { ...prev, username: '', error: error.response.data }
-        }
-        return { ...prev, password: '', error: error.response.data }
-      })
-    }
+    )
   }
 
-  useEffect(() => {
-    if (window.localStorage.getItem('accessToken')) router.push('/')
-  }, [])
+  if (auth.isLogin == true) {
+    router.push('/')
+  }
 
   return (
     <>
@@ -53,11 +40,8 @@ export default function Admin() {
       <div className='container'>
         <div className='row justify-content-center'>
           <div className='col-xl-6 col-lg-12 col-md-9 mt-5'>
-            {state.error?.status && (
-              <Alert
-                status={state.error.status}
-                message={state.error.message}
-              />
+            {auth.error?.status && (
+              <Alert status={auth.error.status} message={auth.error.message} />
             )}
             <div className='card o-hidden border-0 shadow-lg my-5'>
               <div className='card-body p-0'>
@@ -67,18 +51,14 @@ export default function Admin() {
                       <div className='text-center'>
                         <h1 className='h4 text-gray-900 mb-4'>Staycation</h1>
                       </div>
-                      <form
-                        className='user'
-                        onSubmit={handleSubmit}
-                      >
+                      <form className='user' onSubmit={handleSubmit}>
                         <div className='form-group'>
                           <input
                             type='text'
                             className='form-control form-control-user'
                             name='username'
                             placeholder='Enter Username...'
-                            value={state.username}
-                            onChange={handleChange}
+                            ref={username}
                             required
                           />
                         </div>
@@ -89,15 +69,15 @@ export default function Admin() {
                             id='exampleInputPassword'
                             name='password'
                             placeholder='Password'
-                            value={state.password}
-                            onChange={handleChange}
+                            ref={password}
                             required
                           />
                         </div>
 
                         <button
                           type='submit'
-                          className='btn btn-primary btn-user btn-block'
+                          disabled={auth.loading}
+                          className={`btn btn-primary btn-user btn-block ${auth.loading ? 'disabled' : ''}`}
                         >
                           Login
                         </button>
@@ -113,3 +93,21 @@ export default function Admin() {
     </>
   )
 }
+
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req }) {
+    const { user } = req.session
+    if (user?.role === 'admin') {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/',
+        },
+      }
+    }
+    return {
+      props: {},
+    }
+  },
+  sessionOptions
+)

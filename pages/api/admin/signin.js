@@ -1,9 +1,10 @@
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import { withIronSessionApiRoute } from 'iron-session/next'
 import Admin from '../../../src/models/Admin'
 import dbConnect from '../../../src/lib/dbConnect'
+import sessionOptions from '../../../src/lib/sessionOptions'
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       await dbConnect()
@@ -23,17 +24,19 @@ export default async function handler(req, res) {
         return
       }
 
-      const accessToken = jwt.sign(
-        { id: admin._id, username: admin.username },
-        'secret',
-        {
-          expiresIn: '1h',
-        }
-      )
+      req.session.user = {
+        id: admin._id,
+        name: admin.username,
+        role: 'admin',
+      }
 
-      res.status(201).json({ accessToken })
+      await req.session.save()
+
+      res.status(200).json({ isLogin: true })
     } catch (error) {
       res.status(500).json(error)
     }
   }
 }
+
+export default withIronSessionApiRoute(handler, sessionOptions)
