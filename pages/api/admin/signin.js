@@ -32,7 +32,7 @@ async function handler(req, res) {
 
       await req.session.save()
 
-      res.status(200).json({ isLogin: true })
+      res.redirect('/')
     } catch (error) {
       res.status(500).json(error)
     }

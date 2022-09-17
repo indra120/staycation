@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import { withIronSessionSsr } from 'iron-session/next'
 import Head from 'next/head'
@@ -10,7 +9,6 @@ import sessionOptions from '../../src/lib/sessionOptions'
 
 export default function Admin() {
   const auth = useSelector(state => state.auth)
-  const router = useRouter()
   const dispatch = useDispatch()
 
   const username = useRef()
@@ -24,10 +22,6 @@ export default function Admin() {
         password: password.current.value,
       })
     )
-  }
-
-  if (auth.isLogin == true) {
-    router.push('/')
   }
 
   return (
