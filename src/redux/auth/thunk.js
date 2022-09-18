@@ -3,12 +3,16 @@ import request from '../../lib/request'
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (data, { rejectWithValue }) => {
+  async ({ username, password, router }, { rejectWithValue }) => {
     try {
-      const response = await request().post('admin/signin', data)
+      const response = await request().post('admin/signin', {
+        username,
+        password,
+      })
+      router.push('/admin/dashboard')
       return response.data
     } catch (error) {
-      return rejectWithValue(error.response)
+      return rejectWithValue(error.response.data)
     }
   }
 )

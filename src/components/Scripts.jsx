@@ -14,7 +14,7 @@ export default function Scripts({
     <>
       {jquery && <Script defer id='jquery' src='/scripts/jquery.min.js' />}
 
-      {bootstrap && <Script defer id='bootstrap' src='/scripts/jquery.min.js' />}
+      {bootstrap && <Script defer id='bootstrap' src='/scripts/bootstrap.bundle.min.js' />}
 
       {jqueryEasing && (
         <Script defer id='jqueryEasing' src='/scripts/jquery.easing.min.js' />

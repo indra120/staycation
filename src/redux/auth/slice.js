@@ -21,7 +21,7 @@ const authSlice = createSlice({
     [login.rejected]: (state, { payload }) => ({
       ...state,
       loading: false,
-      error: payload.data,
+      error: payload,
     }),
   },
 })

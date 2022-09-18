@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { withIronSessionSsr } from 'iron-session/next'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Stylesheet from '../../src/components/Stylesheet'
 import Alert from '../../src/components/Alert'
@@ -10,6 +11,7 @@ import sessionOptions from '../../src/lib/sessionOptions'
 export default function Admin() {
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const username = useRef()
   const password = useRef()
@@ -20,6 +22,7 @@ export default function Admin() {
       login({
         username: username.current.value,
         password: password.current.value,
+        router,
       })
     )
   }
@@ -71,7 +74,9 @@ export default function Admin() {
                         <button
                           type='submit'
                           disabled={auth.loading}
-                          className={`btn btn-primary btn-user btn-block ${auth.loading ? 'disabled' : ''}`}
+                          className={`btn btn-primary btn-user btn-block ${
+                            auth.loading ? 'disabled' : ''
+                          }`}
                         >
                           Login
                         </button>
@@ -95,7 +100,7 @@ export const getServerSideProps = withIronSessionSsr(
       return {
         redirect: {
           permanent: false,
-          destination: '/',
+          destination: '/admin/dashboard',
         },
       }
     }
