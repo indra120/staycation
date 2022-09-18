@@ -1,19 +1,19 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { withIronSessionSsr } from 'iron-session/next'
 import sessionOptions from '../../../src/lib/sessionOptions'
 import Stylesheet from '../../../src/components/Stylesheet'
 import Scripts from '../../../src/components/Scripts'
-import Header from '../../../src/components/admin/Header'
-import Sidebar from '../../../src/components/admin/Sidebar'
-import Footer from '../../../src/components/admin/Footer'
-
-const Logout = dynamic(() => import('../../../src/components/admin/Logout'), {
-  ssr: false,
-})
 
 export default function Dashboard({ user }) {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch({ type: 'user/add', payload: user })
+  }, [])
+
   return (
     <>
       <Head>
@@ -22,29 +22,13 @@ export default function Dashboard({ user }) {
       <Stylesheet fontAwesome googleFont sbAdmin dataTables />
       <Scripts jquery bootstrap sbAdmin />
 
-      <div id='wrapper'>
-        <Sidebar />
-
-        <div id='content-wrapper' className='d-flex flex-column'>
-          <div id='content'>
-            <Header username={user?.name} />
-
-            <div className='container-fluid'>
-              <h1 className='h3 mb-4 text-gray-800'>Dashboard</h1>
-            </div>
-          </div>
-
-          <Footer />
-        </div>
-      </div>
+      <h1 className='h3 mb-4 text-gray-800'>Dashboard</h1>
 
       <Link href='#page-top' passHref>
         <a className='scroll-to-top rounded'>
           <i className='fas fa-angle-up'></i>
         </a>
       </Link>
-
-      <Logout />
     </>
   )
 }

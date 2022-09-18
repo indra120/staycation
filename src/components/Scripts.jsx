@@ -12,33 +12,33 @@ export default function Scripts({
 }) {
   return (
     <>
-      {jquery && <Script defer id='jquery' src='/scripts/jquery.min.js' />}
+      {jquery && <Script defer strategy='beforeInteractive' id='jquery' src='/scripts/jquery.min.js' />}
 
-      {bootstrap && <Script defer id='bootstrap' src='/scripts/bootstrap.bundle.min.js' />}
+      {bootstrap && <Script defer strategy='beforeInteractive' id='bootstrap' src='/scripts/bootstrap.bundle.min.js' />}
 
       {jqueryEasing && (
-        <Script defer id='jqueryEasing' src='/scripts/jquery.easing.min.js' />
+        <Script defer strategy='beforeInteractive' id='jqueryEasing' src='/scripts/jquery.easing.min.js' />
       )}
 
-      {sbAdmin && <Script defer id='sbAdmin' src='/scripts/sb-admin-2.min.js' />}
+      {sbAdmin && <Script defer strategy='beforeInteractive' id='sbAdmin' src='/scripts/sb-admin-2.min.js' />}
 
       {jqueryDataTables && (
-        <Script defer id='jqueryDataTables' src='/scripts/jquery.dataTables.min.js' />
+        <Script defer strategy='beforeInteractive' id='jqueryDataTables' src='/scripts/jquery.dataTables.min.js' />
       )}
 
       {bootstrapDataTables && (
-        <Script defer
+        <Script defer strategy='beforeInteractive'
           id='bootstrapDataTables'
           src='/scripts/dataTables.bootstrap4.min.js'
         />
       )}
 
       {dataTablesDemo && (
-        <Script defer id='dataTablesDemo' src='/scripts/datatables-demo.js' />
+        <Script defer strategy='beforeInteractive' id='dataTablesDemo' src='/scripts/datatables-demo.js' />
       )}
 
       {ckeditor && (
-        <Script defer
+        <Script defer strategy='beforeInteractive'
           id='ckeditor'
           src='https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js'
         />
