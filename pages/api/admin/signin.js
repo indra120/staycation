@@ -32,10 +32,9 @@ async function handler(req, res) {
 
       await req.session.save()
 
-      // res.redirect('/admin/dashboard')
       res.status(200).json('Success')
     } catch (error) {
-      res.status(500).json(error)
+      res.status(500).json({ message: error.message, status: 'danger' })
     }
   }
 }

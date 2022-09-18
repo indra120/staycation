@@ -6,7 +6,18 @@ import authorization from '../../../../src/middlewares/authorization'
 
 async function handler(req, res) {
   await dbConnect()
+
   switch (req.method) {
+    case 'GET':
+      authorization(req, res, async () => {
+        try {
+          const category = await Category.find()
+          res.status(200).json({ category })
+        } catch (error) {
+          res.status(500).json({ message: error.message, status: 'danger' })
+        }
+      })
+      break
     case 'POST':
       authorization(req, res, async () => {
         try {
