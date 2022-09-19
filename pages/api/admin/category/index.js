@@ -5,8 +5,8 @@ import Category from '../../../../src/models/Category'
 import authorization from '../../../../src/middlewares/authorization'
 
 async function handler(req, res) {
-  await dbConnect()
   authorization(req, res, async () => {
+    await dbConnect()
     switch (req.method) {
       case 'GET':
         try {

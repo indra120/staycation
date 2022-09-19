@@ -11,6 +11,7 @@ export const login = createAsyncThunk(
         password,
       })
       dispatch({ type: 'loading/false' })
+      dispatch({ type: 'auth/isLogin' })
       router.push('/admin/dashboard')
       return response.data
     } catch (error) {
@@ -29,6 +30,7 @@ export const logout = createAsyncThunk(
       dispatch({ type: 'alert/clear' })
       dispatch({ type: 'user/clear' })
       dispatch({ type: 'loading/false' })
+      dispatch({ type: 'auth/isLogout' })
       return
     } catch (error) {
       dispatch({ type: 'loading/false' })

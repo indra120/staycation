@@ -1,21 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { login, logout } from './thunk'
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
     isLogin: false,
   },
-  reducers: {},
-  extraReducers: {
-    [login.fulfilled]: state => ({
-      ...state,
-      isLogin: true,
-    }),
-    [logout.fulfilled]: state => ({
-      ...state,
-      isLogin: false,
-    }),
+  reducers: {
+    isLogin: state => ({ ...state, isLogin: true }),
+    isLogout: state => ({ ...state, isLogin: false }),
   },
 })
 

@@ -8,9 +8,9 @@ import sessionOptions from '../../../src/lib/sessionOptions'
 export default function Dashboard({ user }) {
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch({ type: 'user/add', payload: user })
-  }, [])
+  // useEffect(() => {
+  //   dispatch({ type: 'user/add', payload: user })
+  // }, [])
 
   return (
     <>
@@ -35,7 +35,7 @@ export const getServerSideProps = withIronSessionSsr(
     if (user?.role === 'admin') {
       return {
         props: {
-          user,
+          // user,
         },
       }
     }
