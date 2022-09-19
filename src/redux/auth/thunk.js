@@ -22,14 +22,13 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk(
   'auth/logout',
-  async (router, { dispatch }) => {
+  async (_, { dispatch }) => {
     try {
       dispatch({ type: 'loading/true' })
       await request.get('admin/signout')
       dispatch({ type: 'alert/clear' })
       dispatch({ type: 'user/clear' })
       dispatch({ type: 'loading/false' })
-      router.push('/admin')
       return
     } catch (error) {
       dispatch({ type: 'loading/false' })

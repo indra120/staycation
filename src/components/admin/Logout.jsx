@@ -1,12 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
-// import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { logout } from '../../redux/auth/thunk'
 
 export default function Logout() {
   const loading = useSelector(state => state.loading)
   const dispatch = useDispatch()
-  const router = useRouter()
 
   return (
     <div
@@ -25,7 +22,6 @@ export default function Logout() {
             </h5>
             <button
               className='close'
-              type='button'
               data-dismiss='modal'
               aria-label='Close'
             >
@@ -39,16 +35,16 @@ export default function Logout() {
           <div className='modal-footer'>
             <button
               className='btn btn-secondary'
-              type='button'
               data-dismiss='modal'
             >
               Cancel
             </button>
-            
+
             <button
               className={`btn btn-primary ${loading ? 'disabled' : ''}`}
+              data-dismiss='modal'
               disabled={loading}
-              onClick={() => dispatch(logout(router))}
+              onClick={() => dispatch(logout())}
             >
               Logout
             </button>

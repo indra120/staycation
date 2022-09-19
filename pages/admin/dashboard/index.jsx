@@ -4,8 +4,6 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { withIronSessionSsr } from 'iron-session/next'
 import sessionOptions from '../../../src/lib/sessionOptions'
-import Stylesheet from '../../../src/components/Stylesheet'
-import Scripts from '../../../src/components/Scripts'
 
 export default function Dashboard({ user }) {
   const dispatch = useDispatch()
@@ -19,8 +17,6 @@ export default function Dashboard({ user }) {
       <Head>
         <title>Staycation | Dashboard</title>
       </Head>
-      <Stylesheet fontAwesome googleFont sbAdmin dataTables />
-      <Scripts jquery bootstrap sbAdmin />
 
       <h1 className='h3 mb-4 text-gray-800'>Dashboard</h1>
 

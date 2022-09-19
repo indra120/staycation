@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Table({ categories }) {
   return (
     <div className='card shadow mb-4'>
