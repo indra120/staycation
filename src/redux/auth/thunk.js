@@ -5,7 +5,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async ({ username, password, router }, { rejectWithValue }) => {
     try {
-      const response = await request().post('admin/signin', {
+      const response = await request.post('admin/signin', {
         username,
         password,
       })
