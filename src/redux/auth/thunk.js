@@ -3,16 +3,37 @@ import request from '../../lib/request'
 
 export const login = createAsyncThunk(
   'auth/login',
-  async ({ username, password, router }, { rejectWithValue }) => {
+  async ({ username, password, router }, { dispatch }) => {
     try {
+      dispatch({ type: 'loading/true' })
       const response = await request.post('admin/signin', {
         username,
         password,
       })
+      dispatch({ type: 'loading/false' })
       router.push('/admin/dashboard')
       return response.data
     } catch (error) {
-      return rejectWithValue(error.response.data)
+      dispatch({ type: 'loading/false' })
+      return dispatch({ type: 'alert/add', payload: error.response.data })
+    }
+  }
+)
+
+export const logout = createAsyncThunk(
+  'auth/logout',
+  async (router, { dispatch }) => {
+    try {
+      dispatch({ type: 'loading/true' })
+      await request.get('admin/signout')
+      dispatch({ type: 'alert/clear' })
+      dispatch({ type: 'user/clear' })
+      dispatch({ type: 'loading/false' })
+      router.push('/admin')
+      return
+    } catch (error) {
+      dispatch({ type: 'loading/false' })
+      return dispatch({ type: 'alert/add', payload: error.response.data })
     }
   }
 )

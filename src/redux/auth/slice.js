@@ -1,27 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { login } from './thunk'
+import { login, logout } from './thunk'
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
     isLogin: false,
-    loading: false,
-    error: {},
   },
   reducers: {},
   extraReducers: {
-    [login.pending]: state => ({ ...state, loading: true }),
-    [login.fulfilled]: state => {
-      return {
-        ...state,
-        loading: false,
-        isLogin: true,
-      }
-    },
-    [login.rejected]: (state, { payload }) => ({
+    [login.fulfilled]: state => ({
       ...state,
-      loading: false,
-      error: payload,
+      isLogin: true,
+    }),
+    [logout.fulfilled]: state => ({
+      ...state,
+      isLogin: false,
     }),
   },
 })

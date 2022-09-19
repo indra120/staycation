@@ -9,6 +9,7 @@ const userSlice = createSlice({
   },
   reducers: {
     add: (state, { payload }) => ({ ...state, ...payload }),
+    clear: state => ({ ...state, id: '', name: '', role: '' }),
   },
 })
 

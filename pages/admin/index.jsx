@@ -2,14 +2,18 @@ import { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { withIronSessionSsr } from 'iron-session/next'
 import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Stylesheet from '../../src/components/Stylesheet'
-import Alert from '../../src/components/Alert'
 import { login } from '../../src/redux/auth/thunk'
 import sessionOptions from '../../src/lib/sessionOptions'
 
+const Alert = dynamic(() => import('../../src/components/Alert'), {
+  ssr: false,
+})
+
 export default function Admin() {
-  const auth = useSelector(state => state.auth)
+  const loading = useSelector(state => state.loading)
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -37,9 +41,7 @@ export default function Admin() {
       <div className='container'>
         <div className='row justify-content-center'>
           <div className='col-xl-6 col-lg-12 col-md-9 mt-5'>
-            {auth.error?.status && (
-              <Alert status={auth.error.status} message={auth.error.message} />
-            )}
+            <Alert />
             <div className='card o-hidden border-0 shadow-lg my-5'>
               <div className='card-body p-0'>
                 <div className='row'>
@@ -73,9 +75,9 @@ export default function Admin() {
 
                         <button
                           type='submit'
-                          disabled={auth.loading}
+                          disabled={loading}
                           className={`btn btn-primary btn-user btn-block ${
-                            auth.loading ? 'disabled' : ''
+                            loading ? 'disabled' : ''
                           }`}
                         >
                           Login

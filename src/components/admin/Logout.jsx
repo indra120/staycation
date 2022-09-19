@@ -1,6 +1,13 @@
-import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux'
+// import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { logout } from '../../redux/auth/thunk'
 
 export default function Logout() {
+  const loading = useSelector(state => state.loading)
+  const dispatch = useDispatch()
+  const router = useRouter()
+
   return (
     <div
       className='modal fade'
@@ -37,9 +44,14 @@ export default function Logout() {
             >
               Cancel
             </button>
-            <Link href='/api/admin/signout' passHref>
-              <a className='btn btn-primary'>Logout</a>
-            </Link>
+            
+            <button
+              className={`btn btn-primary ${loading ? 'disabled' : ''}`}
+              disabled={loading}
+              onClick={() => dispatch(logout(router))}
+            >
+              Logout
+            </button>
           </div>
         </div>
       </div>

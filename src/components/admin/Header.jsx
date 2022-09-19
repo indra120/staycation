@@ -1,9 +1,11 @@
 import dynamic from 'next/dynamic'
+import { useSelector } from 'react-redux'
 import Link from 'next/link'
 
 const Logout = dynamic(() => import('./Logout'), { ssr: false })
 
-export default function Header({ username }) {
+export default function Header() {
+  const username = useSelector(state => state.user.name)
   return (
     <>
       <nav className='navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow'>
