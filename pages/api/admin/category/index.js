@@ -10,8 +10,8 @@ async function handler(req, res) {
     switch (req.method) {
       case 'GET':
         try {
-          const category = await Category.find()
-          res.status(200).json({ category })
+          const categories = await Category.find()
+          res.status(200).json({ categories })
         } catch (error) {
           res.status(500).json({ message: error.message, status: 'danger' })
         }
@@ -19,10 +19,9 @@ async function handler(req, res) {
       case 'POST':
         try {
           const { name } = req.body
-          const category = await Category.create({ name })
+          await Category.create({ name })
 
           res.status(201).json({
-            category,
             message: 'Success Add Category',
             status: 'success',
           })
@@ -33,7 +32,7 @@ async function handler(req, res) {
       case 'PUT':
         try {
           const { id, name } = req.body
-          const category = await Category.findOneAndUpdate(
+          await Category.findByIdAndUpdate(
             id,
             {
               $set: {
@@ -44,10 +43,21 @@ async function handler(req, res) {
               new: true,
             }
           )
-          
+
           res.status(200).json({
-            category,
             message: 'Success Update Category',
+            status: 'success',
+          })
+        } catch (error) {
+          res.status(500).json({ message: error.message, status: 'danger' })
+        }
+        break
+      case 'DELETE':
+        try {
+          await Category.findByIdAndDelete(req.body.id)
+
+          res.status(200).json({
+            message: 'Success Delete Category',
             status: 'success',
           })
         } catch (error) {
