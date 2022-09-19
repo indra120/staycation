@@ -1,9 +1,9 @@
-export default function Add() {
+export default function Edit() {
   return (
     <div
       className='modal fade'
-      id='add-modal'
-      tabindex='-1'
+      id='edit-modal'
+      tabIndex='-1'
       role='dialog'
       aria-labelledby='exampleModalLabel'
       aria-hidden='true'
@@ -12,7 +12,7 @@ export default function Add() {
         <div className='modal-content'>
           <div className='modal-header'>
             <h5 className='modal-title' id='exampleModalLabel'>
-              Add Category
+              Update Category
             </h5>
             <button
               type='button'
@@ -29,7 +29,7 @@ export default function Add() {
                 <label for='name'>Name</label>
                 <input
                   type='text'
-                  className='form-control'
+                  className='form-control name'
                   name='name'
                   placeholder='Enter name'
                   required
@@ -49,7 +49,7 @@ export default function Add() {
                 className='btn btn-primary'
                 data-dismiss='modal'
               >
-                Add
+                Update
               </button>
             </div>
           </form>
