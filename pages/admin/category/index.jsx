@@ -1,13 +1,30 @@
+import dynamic from 'next/dynamic'
+import Head from 'next/head'
 import { withIronSessionSsr } from 'iron-session/next'
 import sessionOptions from '../../../src/lib/sessionOptions'
 import Alert from '../../../src/components/Alert'
-import Table from '../../../src/components/admin/category/Table'
-import AddModal from '../../../src/components/admin/category/modal/Add'
-import EditModal from '../../../src/components/admin/category/modal/Edit'
+
+const Table = dynamic(
+  () => import('../../../src/components/admin/category/Table'),
+  { ssr: false }
+)
+
+const AddModal = dynamic(
+  () => import('../../../src/components/admin/category/modal/Add'),
+  { ssr: false }
+)
+
+const EditModal = dynamic(
+  () => import('../../../src/components/admin/category/modal/Edit'),
+  { ssr: false }
+)
 
 export default function Category() {
   return (
     <>
+      <Head>
+        <title>Staycation | Category</title>
+      </Head>
       <Alert />
       <h1 className='h3 mb-4 text-gray-800'>Category</h1>
       <Table />

@@ -24,9 +24,10 @@ async function handler(req, res) {
       case 'POST':
         try {
           const { name } = req.body
-          await new Category({ name }).save()
+          const category = await new Category({ name }).save()
 
           res.status(201).json({
+            category,
             message: 'Success Add Category',
             status: 'success',
           })

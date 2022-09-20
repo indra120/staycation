@@ -1,4 +1,16 @@
+import { useRef } from 'react'
+import { useDispatch } from 'react-redux'
+import { addCategory } from '../../../../redux/categories/thunk'
+
 export default function Add() {
+  const name = useRef()
+  const dispatch = useDispatch()
+
+  function handleSubmit() {
+    dispatch(addCategory(name.current.value))
+    name.current.value = ''
+  }
+
   return (
     <div
       className='modal fade'
@@ -28,6 +40,7 @@ export default function Add() {
               <div className='form-group'>
                 <label htmlFor='name'>Name</label>
                 <input
+                  ref={name}
                   type='text'
                   className='form-control'
                   name='name'
@@ -48,6 +61,7 @@ export default function Add() {
                 type='submit'
                 className='btn btn-primary'
                 data-dismiss='modal'
+                onClick={handleSubmit}
               >
                 Add
               </button>

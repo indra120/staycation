@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchCategories } from './thunk'
+import { fetchCategories, addCategory } from './thunk'
 
 const categoriesSlice = createSlice({
   name: 'categories',
@@ -12,6 +12,10 @@ const categoriesSlice = createSlice({
     [fetchCategories.fulfilled]: (state, { payload }) => ({
       ...state,
       all: payload.categories,
+    }),
+    [addCategory.fulfilled]: (state, { payload }) => ({
+      ...state,
+      all: [...state.all, payload.category],
     }),
   },
 })
