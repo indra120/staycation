@@ -27,3 +27,18 @@ export const addCategory = createAsyncThunk(
     }
   }
 )
+
+export const editCategory = createAsyncThunk(
+  'category/edit',
+  async ({ id, index, name }, { dispatch }) => {
+    try {
+      dispatch({ type: 'loading/true' })
+      const response = await request.put('admin/category', { id, name })
+      dispatch({ type: 'alert/add', payload: response.data })
+      dispatch({ type: 'loading/false' })
+      return { id, index, name }
+    } catch (error) {
+      return dispatch({ type: 'alert/add', payload: error.response.data })
+    }
+  }
+)

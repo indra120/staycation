@@ -1,4 +1,26 @@
+import { useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { editCategory } from '../../../../redux/categories/thunk'
+
 export default function Edit() {
+  const category = useSelector(state => state.categories.selected)
+  const name = useRef()
+  const dispatch = useDispatch()
+
+  function handleSubmit() {
+    dispatch(
+      editCategory({
+        id: category.data.id,
+        index: category.index,
+        name: name.current.value,
+      })
+    )
+  }
+
+  useEffect(() => {
+    name.current.value = category?.data?.name
+  }, [category?.data?.name])
+
   return (
     <div
       className='modal fade'
@@ -28,6 +50,7 @@ export default function Edit() {
               <div className='form-group'>
                 <label htmlFor='name'>Name</label>
                 <input
+                  ref={name}
                   type='text'
                   className='form-control name'
                   name='name'
@@ -48,6 +71,7 @@ export default function Edit() {
                 type='submit'
                 className='btn btn-primary'
                 data-dismiss='modal'
+                onClick={handleSubmit}
               >
                 Update
               </button>

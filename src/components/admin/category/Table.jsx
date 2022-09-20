@@ -47,6 +47,12 @@ export default function Table() {
                       className='btn btn-warning btn-circle btn-sm button-update'
                       data-toggle='modal'
                       data-target='#edit-modal'
+                      onClick={() =>
+                        dispatch({
+                          type: 'categories/select',
+                          payload: { data: category, index },
+                        })
+                      }
                     >
                       <i className='fas fa-edit'></i>
                     </button>

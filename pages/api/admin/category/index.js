@@ -27,7 +27,11 @@ async function handler(req, res) {
           const category = await new Category({ name }).save()
 
           res.status(201).json({
-            category,
+            category: {
+              id: category._id,
+              name: category.name,
+              itemId: category.itemId,
+            },
             message: 'Success Add Category',
             status: 'success',
           })
