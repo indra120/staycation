@@ -1,4 +1,15 @@
-export default function Table({ categories }) {
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCategories } from '../../../redux/categories/thunk'
+
+export default function Table() {
+  const categories = useSelector(state => state.categories.all)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchCategories())
+  }, [])
+
   return (
     <div className='card shadow mb-4'>
       <div className='card-header py-3'>
@@ -27,12 +38,16 @@ export default function Table({ categories }) {
               </tr>
             </thead>
             <tbody>
-              {categories.map((category, index) => (
+              {categories?.map((category, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{category.name}</td>
                   <td>
-                    <button className='btn btn-warning btn-circle btn-sm button-update'>
+                    <button
+                      className='btn btn-warning btn-circle btn-sm button-update'
+                      data-toggle='modal'
+                      data-target='#edit-modal'
+                    >
                       <i className='fas fa-edit'></i>
                     </button>
 

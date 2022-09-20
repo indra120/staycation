@@ -12,6 +12,7 @@ export const login = createAsyncThunk(
       })
       dispatch({ type: 'loading/false' })
       dispatch({ type: 'auth/isLogin' })
+      dispatch({ type: 'alert/clear' })
       router.push('/admin/dashboard')
       return response.data
     } catch (error) {
@@ -23,7 +24,7 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk(
   'auth/logout',
-  async (_, { dispatch }) => {
+  async (router, { dispatch }) => {
     try {
       dispatch({ type: 'loading/true' })
       await request.get('admin/signout')
@@ -31,6 +32,7 @@ export const logout = createAsyncThunk(
       dispatch({ type: 'user/clear' })
       dispatch({ type: 'loading/false' })
       dispatch({ type: 'auth/isLogout' })
+      router.push('/admin')
       return
     } catch (error) {
       dispatch({ type: 'loading/false' })

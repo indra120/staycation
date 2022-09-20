@@ -26,7 +26,7 @@ export default function Edit() {
           <form>
             <div className='modal-body'>
               <div className='form-group'>
-                <label for='name'>Name</label>
+                <label htmlFor='name'>Name</label>
                 <input
                   type='text'
                   className='form-control name'

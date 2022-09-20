@@ -3,7 +3,7 @@ export default function Add() {
     <div
       className='modal fade'
       id='add-modal'
-      tabindex='-1'
+      tabIndex='-1'
       role='dialog'
       aria-labelledby='exampleModalLabel'
       aria-hidden='true'
@@ -26,7 +26,7 @@ export default function Add() {
           <form>
             <div className='modal-body'>
               <div className='form-group'>
-                <label for='name'>Name</label>
+                <label htmlFor='name'>Name</label>
                 <input
                   type='text'
                   className='form-control'

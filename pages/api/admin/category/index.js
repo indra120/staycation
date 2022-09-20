@@ -10,7 +10,12 @@ async function handler(req, res) {
     switch (req.method) {
       case 'GET':
         try {
-          const categories = await Category.find()
+          let categories = await Category.find()
+          categories = categories.map(({ _id: id, name, itemId }) => ({
+            id,
+            name,
+            itemId,
+          }))
           res.status(200).json({ categories })
         } catch (error) {
           res.status(500).json({ message: error.message, status: 'danger' })
@@ -19,7 +24,7 @@ async function handler(req, res) {
       case 'POST':
         try {
           const { name } = req.body
-          await Category.create({ name })
+          await new Category({ name }).save()
 
           res.status(201).json({
             message: 'Success Add Category',

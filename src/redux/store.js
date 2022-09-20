@@ -3,6 +3,7 @@ import loadingReducer from './loading/slice'
 import alertReducer from './alert/slice'
 import authReducer from './auth/slice'
 import userReducer from './user/slice'
+import categoriesReducer from './categories/slice'
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     alert: alertReducer,
     auth: authReducer,
     user: userReducer,
+    categories: categoriesReducer,
   },
 })
 
