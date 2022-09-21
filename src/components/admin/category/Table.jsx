@@ -50,14 +50,24 @@ export default function Table() {
                       onClick={() =>
                         dispatch({
                           type: 'categories/select',
-                          payload: { data: category, index },
+                          payload: category,
                         })
                       }
                     >
                       <i className='fas fa-edit'></i>
                     </button>
 
-                    <button className='btn btn-danger btn-circle btn-sm'>
+                    <button
+                      className='btn btn-danger btn-circle btn-sm'
+                      data-toggle='modal'
+                      data-target='#delete-modal'
+                      onClick={() =>
+                        dispatch({
+                          type: 'categories/select',
+                          payload: category,
+                        })
+                      }
+                    >
                       <i className='fas fa-trash'></i>
                     </button>
                   </td>

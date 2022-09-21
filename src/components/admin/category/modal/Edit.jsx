@@ -3,23 +3,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { editCategory } from '../../../../redux/categories/thunk'
 
 export default function Edit() {
-  const category = useSelector(state => state.categories.selected)
-  const name = useRef()
+  const { id, name } = useSelector(state => state.categories.selected)
+  const inputName = useRef()
   const dispatch = useDispatch()
 
   function handleSubmit() {
     dispatch(
       editCategory({
-        id: category.data.id,
-        index: category.index,
-        name: name.current.value,
+        id,
+        name: inputName.current.value,
       })
     )
   }
 
   useEffect(() => {
-    name.current.value = category?.data?.name
-  }, [category?.data?.name])
+    inputName.current.value = name
+  }, [name])
 
   return (
     <div
@@ -50,7 +49,7 @@ export default function Edit() {
               <div className='form-group'>
                 <label htmlFor='name'>Name</label>
                 <input
-                  ref={name}
+                  ref={inputName}
                   type='text'
                   className='form-control name'
                   name='name'

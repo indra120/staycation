@@ -19,6 +19,11 @@ const EditModal = dynamic(
   { ssr: false }
 )
 
+const DeleteModal = dynamic(
+  () => import('../../../src/components/admin/category/modal/Delete'),
+  { ssr: false }
+)
+
 export default function Category() {
   return (
     <>
@@ -30,6 +35,7 @@ export default function Category() {
       <Table />
       <AddModal />
       <EditModal />
+      <DeleteModal />
     </>
   )
 }

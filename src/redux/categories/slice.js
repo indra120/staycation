@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchCategories, addCategory, editCategory } from './thunk'
+import {
+  fetchCategories,
+  addCategory,
+  editCategory,
+  deleteCategory,
+} from './thunk'
 
 const categoriesSlice = createSlice({
   name: 'categories',
@@ -19,9 +24,16 @@ const categoriesSlice = createSlice({
       ...state,
       all: [...state.all, payload.category],
     }),
-    [editCategory.fulfilled]: (state, { payload }) => {
-      state.all[payload.index] = payload
-    },
+    [editCategory.fulfilled]: (state, { payload }) => ({
+      ...state,
+      all: state.all.map(category =>
+        category.id === payload.id ? { ...category, ...payload } : category
+      ),
+    }),
+    [deleteCategory.fulfilled]: (state, { payload }) => ({
+      ...state,
+      all: state.all.filter(category => category.id !== payload),
+    }),
   },
 })
 

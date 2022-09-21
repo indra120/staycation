@@ -61,18 +61,6 @@ async function handler(req, res) {
         } catch (error) {
           res.status(500).json({ message: error.message, status: 'danger' })
         }
-        break
-      case 'DELETE':
-        try {
-          await Category.findByIdAndDelete(req.body.id)
-
-          res.status(200).json({
-            message: 'Success Delete Category',
-            status: 'success',
-          })
-        } catch (error) {
-          res.status(500).json({ message: error.message, status: 'danger' })
-        }
     }
   })
 }

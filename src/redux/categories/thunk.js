@@ -30,13 +30,28 @@ export const addCategory = createAsyncThunk(
 
 export const editCategory = createAsyncThunk(
   'category/edit',
-  async ({ id, index, name }, { dispatch }) => {
+  async ({ id, name }, { dispatch }) => {
     try {
       dispatch({ type: 'loading/true' })
       const response = await request.put('admin/category', { id, name })
       dispatch({ type: 'alert/add', payload: response.data })
       dispatch({ type: 'loading/false' })
-      return { id, index, name }
+      return { id, name }
+    } catch (error) {
+      return dispatch({ type: 'alert/add', payload: error.response.data })
+    }
+  }
+)
+
+export const deleteCategory = createAsyncThunk(
+  'category/delete',
+  async (id, { dispatch }) => {
+    try {
+      dispatch({ type: 'loading/true' })
+      const response = await request.delete(`admin/category/${id}`)
+      dispatch({ type: 'alert/add', payload: response.data })
+      dispatch({ type: 'loading/false' })
+      return id
     } catch (error) {
       return dispatch({ type: 'alert/add', payload: error.response.data })
     }
