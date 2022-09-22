@@ -2,9 +2,9 @@ import multer from 'multer'
 import path from 'path'
 
 const storage = multer.diskStorage({
-  destination: 'images',
+  destination: 'public/images',
   filename: (_, file, cb) =>
-    cb(null, `${Date.now()}${path.extname(file.originalname)}`),
+    cb(null, Date.now() + path.extname(file.originalname)),
 })
 
 function checkFileType(file, cb) {
