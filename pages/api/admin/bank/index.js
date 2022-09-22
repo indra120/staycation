@@ -13,6 +13,13 @@ const handler = nextConnect({
 
 handler.use(uploadSingle)
 
+handler.get(async (req, res) => {
+  await dbConnect()
+
+  const bank = await Bank.find()
+  res.status(200).json({ bank })
+})
+
 handler.post(async (req, res) => {
   await dbConnect()
 
