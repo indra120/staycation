@@ -3,7 +3,7 @@ import sessionOptions from '../../../src/lib/sessionOptions'
 
 export default function Bank() {
   return (
-    <form action='/api/admin/bank' method='POST' encType='multipart/form-data'>
+    <form action='/api/admin/bank?_method=PUT' method='POST' encType='multipart/form-data'>
       <div className='modal-body'>
         <div className='form-group'>
           <label for='bankName'>Bank Name</label>
@@ -45,9 +45,9 @@ export default function Bank() {
             type='file'
             className='form-control'
             name='image'
-            required
           />
         </div>
+        <input type="hidden" className="id" name="id" value='632c2d8ae0640a5fe49d0335' />
       </div>
       <button type='submit' className='btn btn-primary'>
         Add

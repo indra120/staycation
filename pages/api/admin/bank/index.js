@@ -1,9 +1,8 @@
 import nextConnect from 'next-connect'
-import { withIronSessionApiRoute } from 'iron-session/next'
-import sessionOptions from '../../../../src/lib/sessionOptions'
+import fs from 'fs-extra'
+import path from 'path'
 import dbConnect from '../../../../src/lib/dbConnect'
 import Bank from '../../../../src/models/Bank'
-import authorization from '../../../../src/middlewares/authorization'
 import { uploadSingle } from '../../../../src/middlewares/multer'
 
 const handler = nextConnect({
@@ -34,6 +33,49 @@ handler.post(async (req, res) => {
   res.status(201).json({
     bank,
     message: 'Success Add Bank',
+    status: 'success',
+  })
+})
+
+handler.put(async (req, res) => {
+  await dbConnect()
+
+  const { id, name, bankName, nomorRekening } = req.body
+
+  if (req.file == undefined) {
+    await Bank.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          name,
+          bankName,
+          nomorRekening,
+        },
+      },
+      {
+        new: true,
+      }
+    )
+  } else {
+    await fs.unlink(path.join(`public/${Bank.imageUrl}`))
+    await Bank.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          name,
+          bankName,
+          nomorRekening,
+          imageUrl: `images/${req.file.filename}`,
+        },
+      },
+      {
+        new: true,
+      }
+    )
+  }
+
+  res.status(200).json({
+    message: 'Success Update Bank',
     status: 'success',
   })
 })
