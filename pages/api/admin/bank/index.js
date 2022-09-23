@@ -80,6 +80,18 @@ handler.put(async (req, res) => {
   })
 })
 
+handler.delete(async (req, res) => {
+  const { id } = req.params
+  const bank = await Bank.findById(id)
+  await fs.unlink(path.join(`public/${bank.imageUrl}`))
+  await bank.remove()
+
+  res.status(200).json({
+    message: 'Success Update Bank',
+    status: 'success',
+  })
+})
+
 export default handler
 
 export const config = {
