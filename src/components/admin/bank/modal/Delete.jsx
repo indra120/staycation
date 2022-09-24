@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteCategory } from '../../../../redux/categories/thunk'
+import { deleteBank } from '../../../../redux/bank/thunk'
 
 export default function Delete() {
-  const id = useSelector(state => state.categories.selected.id)
+  const id = useSelector(state => state.bank.selected.id)
   const loading = useSelector(state => state.loading)
   const dispatch = useDispatch()
 
   function handleDelete() {
-    dispatch(deleteCategory(id))
+    dispatch(deleteBank(id))
   }
 
   return (
@@ -23,7 +23,7 @@ export default function Delete() {
         <div className='modal-content'>
           <div className='modal-header'>
             <h5 className='modal-title' id='exampleModalLabel'>
-              Delete Category
+              Delete Bank
             </h5>
             <button
               type='button'

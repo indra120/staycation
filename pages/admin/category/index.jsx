@@ -2,7 +2,11 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { withIronSessionSsr } from 'iron-session/next'
 import sessionOptions from '../../../src/lib/sessionOptions'
-import Alert from '../../../src/components/Alert'
+
+const Alert = dynamic(
+  () => import('../../../src/components/Alert'),
+  { ssr: false }
+)
 
 const Table = dynamic(
   () => import('../../../src/components/admin/category/Table'),

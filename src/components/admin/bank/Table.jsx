@@ -1,20 +1,20 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchCategories } from '../../../redux/categories/thunk'
+import { fetchBank } from '../../../redux/bank/thunk'
 
 export default function Table() {
-  const categories = useSelector(state => state.categories.all)
+  const bank = useSelector(state => state.bank.all)
   const dispatch = useDispatch()
 
-  function select(category) {
+  function select(bank) {
     dispatch({
-      type: 'categories/select',
-      payload: category,
+      type: 'bank/select',
+      payload: bank,
     })
   }
 
   useEffect(() => {
-    dispatch(fetchCategories())
+    dispatch(fetchBank())
   }, [])
 
   return (
@@ -40,21 +40,29 @@ export default function Table() {
             <thead>
               <tr>
                 <th>No</th>
+                <th>Bank Name</th>
+                <th>Nomor Rekening</th>
                 <th>Name</th>
+                <th>Image</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {categories?.map((category, index) => (
+              {bank?.map((bank, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{category.name}</td>
+                  <td>{bank.bankName}</td>
+                  <td>{bank.nomorRekening}</td>
+                  <td>{bank.name}</td>
+                  <td>
+                    <img src={bank.imageUrl} alt='imageUrl' width='70px' />
+                  </td>
                   <td>
                     <button
                       className='btn btn-warning btn-circle btn-sm button-update'
                       data-toggle='modal'
                       data-target='#edit-modal'
-                      onClick={() => select(category)}
+                      onClick={() => select(bank)}
                     >
                       <i className='fas fa-edit'></i>
                     </button>
@@ -63,7 +71,7 @@ export default function Table() {
                       className='btn btn-danger btn-circle btn-sm'
                       data-toggle='modal'
                       data-target='#delete-modal'
-                      onClick={() => select(category)}
+                      onClick={() => select(bank)}
                     >
                       <i className='fas fa-trash'></i>
                     </button>

@@ -1,11 +1,8 @@
-import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { editCategory } from '../../../../redux/categories/thunk'
+import { addBank } from '../../../../redux/bank/thunk'
 
-export default function Edit() {
-  const { id, name } = useSelector(state => state.categories.selected)
+export default function Add() {
   const loading = useSelector(state => state.loading)
-  const inputName = useRef()
   const dispatch = useDispatch()
 
   function handleSubmit(e) {
@@ -14,22 +11,13 @@ export default function Edit() {
     const form = new FormData(e.target)
     const formData = Object.fromEntries(form.entries())
 
-    dispatch(
-      editCategory({
-        ...formData,
-        id,
-      })
-    )
+    dispatch(addBank(formData))
   }
-
-  useEffect(() => {
-    inputName.current.value = name
-  }, [name])
 
   return (
     <div
       className='modal fade'
-      id='edit-modal'
+      id='add-modal'
       tabIndex='-1'
       role='dialog'
       aria-labelledby='exampleModalLabel'
@@ -39,12 +27,12 @@ export default function Edit() {
         <div className='modal-content'>
           <div className='modal-header'>
             <h5 className='modal-title' id='exampleModalLabel'>
-              Update Category
+              Add Bank
             </h5>
             <button
               type='button'
               className='close'
-              id='closeEditModal'
+              id='closeAddModal'
               data-dismiss='modal'
               aria-label='Close'
             >
@@ -54,13 +42,45 @@ export default function Edit() {
           <form onSubmit={handleSubmit}>
             <div className='modal-body'>
               <div className='form-group'>
+                <label htmlFor='bankName'>Bank Name</label>
+                <input
+                  id='bankName'
+                  type='text'
+                  className='form-control'
+                  name='bankName'
+                  placeholder='Enter bank name'
+                  required
+                />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='nomorRekening'>Nomor Rekening</label>
+                <input
+                  id='nomorRekening'
+                  type='text'
+                  className='form-control'
+                  name='nomorRekening'
+                  placeholder='Enter nomor rekening'
+                  required
+                />
+              </div>
+              <div className='form-group'>
                 <label htmlFor='name'>Name</label>
                 <input
-                  ref={inputName}
+                  id='name'
                   type='text'
-                  className='form-control name'
+                  className='form-control'
                   name='name'
                   placeholder='Enter name'
+                  required
+                />
+              </div>
+              <div className='form-group'>
+                <label htmlFor='image'>Image</label>
+                <input
+                  id='image'
+                  type='file'
+                  className='form-control'
+                  name='image'
                   required
                 />
               </div>
@@ -78,7 +98,7 @@ export default function Edit() {
                 className={`btn btn-primary ${loading ? 'disabled' : ''}`}
                 disabled={loading}
               >
-                Update
+                Add
               </button>
             </div>
           </form>

@@ -1,14 +1,17 @@
-import { useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addCategory } from '../../../../redux/categories/thunk'
 
 export default function Add() {
-  const name = useRef()
+  const loading = useSelector(state => state.loading)
   const dispatch = useDispatch()
 
-  function handleSubmit() {
-    dispatch(addCategory(name.current.value))
-    name.current.value = ''
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    const form = new FormData(e.target)
+    const formData = Object.fromEntries(form.entries())
+
+    dispatch(addCategory(formData))
   }
 
   return (
@@ -29,18 +32,18 @@ export default function Add() {
             <button
               type='button'
               className='close'
+              id='closeAddModal'
               data-dismiss='modal'
               aria-label='Close'
             >
               <span aria-hidden='true'>&times;</span>
             </button>
           </div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className='modal-body'>
               <div className='form-group'>
                 <label htmlFor='name'>Name</label>
                 <input
-                  ref={name}
                   type='text'
                   className='form-control'
                   name='name'
@@ -59,9 +62,8 @@ export default function Add() {
               </button>
               <button
                 type='submit'
-                className='btn btn-primary'
-                data-dismiss='modal'
-                onClick={handleSubmit}
+                className={`btn btn-primary ${loading ? 'disabled' : ''}`}
+                disabled={loading}
               >
                 Add
               </button>

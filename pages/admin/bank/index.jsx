@@ -1,58 +1,46 @@
+import dynamic from 'next/dynamic'
+import Head from 'next/head'
 import { withIronSessionSsr } from 'iron-session/next'
 import sessionOptions from '../../../src/lib/sessionOptions'
 
+const Alert = dynamic(
+  () => import('../../../src/components/Alert'),
+  { ssr: false }
+)
+
+const Table = dynamic(
+  () => import('../../../src/components/admin/bank/Table'),
+  { ssr: false }
+)
+
+const AddModal = dynamic(
+  () => import('../../../src/components/admin/bank/modal/Add'),
+  { ssr: false }
+)
+
+const EditModal = dynamic(
+  () => import('../../../src/components/admin/bank/modal/Edit'),
+  { ssr: false }
+)
+
+const DeleteModal = dynamic(
+  () => import('../../../src/components/admin/bank/modal/Delete'),
+  { ssr: false }
+)
+
 export default function Bank() {
   return (
-    <form action='/api/admin/bank?_method=PUT' method='POST' encType='multipart/form-data'>
-      <div className='modal-body'>
-        <div className='form-group'>
-          <label for='bankName'>Bank Name</label>
-          <input
-            id='bankName'
-            type='text'
-            className='form-control'
-            name='bankName'
-            placeholder='Enter bank name'
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <label for='nomorRekening'>Nomor Rekening</label>
-          <input
-            id='nomorRekening'
-            type='text'
-            className='form-control'
-            name='nomorRekening'
-            placeholder='Enter nomor rekening'
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <label for='name'>Name</label>
-          <input
-            id='name'
-            type='text'
-            className='form-control'
-            name='name'
-            placeholder='Enter name'
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <label for='image'>Image</label>
-          <input
-            id='image'
-            type='file'
-            className='form-control'
-            name='image'
-          />
-        </div>
-        <input type="hidden" className="id" name="id" value='632c2d8ae0640a5fe49d0335' />
-      </div>
-      <button type='submit' className='btn btn-primary'>
-        Add
-      </button>
-    </form>
+    <>
+      <Head>
+        <title>Staycation | Bank</title>
+      </Head>
+      <Alert />
+      <h1 className='h3 mb-4 text-gray-800'>Bank</h1>
+      <Table />
+      <AddModal />
+      <EditModal />
+      <DeleteModal />
+    </>
   )
 }
 

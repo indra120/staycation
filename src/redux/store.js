@@ -4,6 +4,7 @@ import alertReducer from './alert/slice'
 import authReducer from './auth/slice'
 import userReducer from './user/slice'
 import categoriesReducer from './categories/slice'
+import bankReducer from './bank/slice'
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     auth: authReducer,
     user: userReducer,
     categories: categoriesReducer,
+    bank: bankReducer,
   },
 })
 

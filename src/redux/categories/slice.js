@@ -22,7 +22,7 @@ const categoriesSlice = createSlice({
     }),
     [addCategory.fulfilled]: (state, { payload }) => ({
       ...state,
-      all: [...state.all, payload.category],
+      all: [...state.all, payload],
     }),
     [editCategory.fulfilled]: (state, { payload }) => ({
       ...state,

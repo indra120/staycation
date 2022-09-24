@@ -15,7 +15,15 @@ handler.use(uploadSingle)
 handler.get(async (req, res) => {
   await dbConnect()
 
-  const bank = await Bank.find()
+  let bank = await Bank.find()
+  bank = bank.map(({ _id: id, name, bankName, nomorRekening, imageUrl }) => ({
+    id,
+    name,
+    bankName,
+    nomorRekening,
+    imageUrl,
+  }))
+
   res.status(200).json({ bank })
 })
 
@@ -40,10 +48,11 @@ handler.post(async (req, res) => {
 handler.put(async (req, res) => {
   await dbConnect()
 
-  const { id, name, bankName, nomorRekening } = req.body
+  let bank
 
   if (req.file == undefined) {
-    await Bank.findByIdAndUpdate(
+    const { id, name, bankName, nomorRekening } = req.body
+    bank = await Bank.findByIdAndUpdate(
       id,
       {
         $set: {
@@ -57,36 +66,20 @@ handler.put(async (req, res) => {
       }
     )
   } else {
-    await fs.unlink(path.join(`public/${Bank.imageUrl}`))
-    await Bank.findByIdAndUpdate(
-      id,
-      {
-        $set: {
-          name,
-          bankName,
-          nomorRekening,
-          imageUrl: `images/${req.file.filename}`,
-        },
-      },
-      {
-        new: true,
-      }
-    )
+    const { id, name, bankName, nomorRekening } = req.body
+    bank = await Bank.findById(id)
+    await fs.unlink(path.join(`public${bank.imageUrl}`))
+    bank.name = name
+    bank.bankName = bankName
+    bank.nomorRekening = nomorRekening
+    bank.imageUrl = `/images/${req.file.filename}`
+    await bank.save()
   }
 
-  res.status(200).json({
-    message: 'Success Update Bank',
-    status: 'success',
-  })
-})
-
-handler.delete(async (req, res) => {
-  const { id } = req.params
-  const bank = await Bank.findById(id)
-  await fs.unlink(path.join(`public/${bank.imageUrl}`))
-  await bank.remove()
+  const { _id: id, name, bankName, nomorRekening, imageUrl } = bank
 
   res.status(200).json({
+    bank: { id, name, bankName, nomorRekening, imageUrl },
     message: 'Success Update Bank',
     status: 'success',
   })
